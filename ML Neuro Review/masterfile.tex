@@ -1,0 +1,31 @@
+% Verwendete Pakete und andere Definitionen:
+\input{header}
+%
+% Zusammenfügung aller Teildokumente:
+\begin{document}
+\pgfmathdeclarefunction{gauss}{3}{%
+  \pgfmathparse{1/(sqrt(2*pi*#3))*exp(-((#1-#2)^2)/(2*#3))}%
+}
+
+	\pagenumbering{Roman} % Erste Seiten haben römische Seitenzahlen
+	\input{chapters/titlepage} % Titelseite
+	\cleardoublepage
+	%\begin{center}
+	%\textit{To my Father.}
+	%\end{center}
+	\begingroup
+	  	\renewcommand*{\chapterpagestyle}{empty}
+	  	\pagestyle{empty} % Keine Seitenzahl für Inhaltsverzeichnis
+	  	\tableofcontents % Inhaltsverzeichnis
+	  	\cleardoublepage
+	\endgroup
+	\pagestyle{scrheadings} % Seitenstil setzen
+	\setcounter{page}{1} % Titelseite und Inhaltsverzeichnis sollen nicht mitgezählt werden
+	\pagenumbering{arabic} % Ab hier arabische Seitenzahlen
+	%
+	\input{chapters/ELBO}
+	\input{chapters/SSM}
+	\input{chapters/Probability_Distros}
+	\input{chapters/Appendix}
+	\input{chapters/ToDo}
+\end{document}

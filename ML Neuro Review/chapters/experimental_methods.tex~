@@ -1,0 +1,250 @@
+\chapter{Experimental Methods}
+\label{sec:Methods}
+
+\section{Spread of ongoing activity}
+\label{sec:crosscorr}
+\begin{figure}[!htb]
+\begin{subfigure}{0.55\textwidth}
+\begin{tikzpicture}
+\begin{axis}[
+	scatter/classes={a={mark=o,draw=black}},
+    %x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+    %y label style={at={(axis description cs:-0.1,.5)},anchor=south},
+    xlabel near ticks,
+    ylabel near ticks,
+    xlabel={t},
+    ylabel={y}]
+\addplot[color=red,mark=x,]%
+table[meta=label] {
+x y label
+1.0000 0.2474 a 
+2.0000 0.4794 a 
+3.0000 0.6816 a 
+4.0000 0.8415 a 
+5.0000 0.9490 a 
+6.0000 0.9975 a 
+7.0000 0.9840 a 
+8.0000 0.9093 a 
+9.0000 0.7781 a 
+10.0000 0.5985 a 
+11.0000 0.3817 a 
+12.0000 0.1411 a 
+13.0000 -0.1082 a 
+14.0000 -0.3508 a 
+15.0000 -0.5716 a 
+16.0000 -0.7568 a 
+17.0000 -0.8950 a 
+18.0000 -0.9775 a 
+19.0000 -0.9993 a 
+20.0000 -0.9589 a 
+21.0000 -0.8589 a 
+22.0000 -0.7055 a 
+23.0000 -0.5083 a 
+24.0000 -0.2794 a 
+25.0000 -0.0332 a 
+26.0000 0.2151 a 
+27.0000 0.4500 a 
+28.0000 0.6570 a 
+29.0000 0.8231 a 
+30.0000 0.9380 a 
+    };
+    \addplot[color=blue,mark=x,]%
+table[meta=label] {
+x y label
+1.0000 0.6816 a 
+2.0000 0.8415 a 
+3.0000 0.9490 a 
+4.0000 0.9975 a 
+5.0000 0.9840 a 
+6.0000 0.9093 a 
+7.0000 0.7781 a 
+8.0000 0.5985 a 
+9.0000 0.3817 a 
+10.0000 0.1411 a 
+11.0000 -0.1082 a 
+12.0000 -0.3508 a 
+13.0000 -0.5716 a 
+14.0000 -0.7568 a 
+15.0000 -0.8950 a 
+16.0000 -0.9775 a 
+17.0000 -0.9993 a 
+18.0000 -0.9589 a 
+19.0000 -0.8589 a 
+20.0000 -0.7055 a 
+21.0000 -0.5083 a 
+22.0000 -0.2794 a 
+23.0000 -0.0332 a 
+24.0000 0.2151 a 
+25.0000 0.4500 a 
+26.0000 0.6570 a 
+27.0000 0.8231 a 
+28.0000 0.9380 a 
+29.0000 0.9946 a 
+30.0000 0.9894 a 
+    };
+\legend{Region A, Region B}
+    x label style={at={(axis description cs:0,-2)},anchor=north},
+    y label style={at={(axis description cs:-0.1,.5)},rotate=90,anchor=south}]
+\end{axis} 
+\end{tikzpicture}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.55\textwidth}
+\begin{tikzpicture}
+\begin{axis}[
+	scatter/classes={a={mark=o,draw=black}},
+    %x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+    %y label style={at={(axis description cs:-0.1,.5)},anchor=south},
+    xlabel near ticks,
+    ylabel near ticks,
+    xlabel={t},
+    ylabel={y (a.u.)}]
+\addplot[color=red,mark=x,]%
+table[meta=label] {
+x y label
+-5.0000 -15.5934 a 
+-4.0000 8.6379 a 
+-3.0000 32.5789 a 
+-2.0000 54.7291 a 
+-1.0000 73.6846 a 
+0.0000 88.2275 a 
+1.0000 97.2884 a 
+2.0000 100.2391 a 
+3.0000 96.9575 a 
+4.0000 87.7088 a 
+5.0000 73.1253 a 
+    };
+%\legend{cross-correlation function}
+    x label style={at={(axis description cs:0,-2)},anchor=north},
+    y label style={at={(axis description cs:-0.1,.5)},rotate=90,anchor=south}]
+\end{axis} 
+\end{tikzpicture}
+\end{subfigure}
+  \caption{For two identical waves shifted by two seconds against each other (left), the cross-correlation function exhibits a maximum at $t=2$ (right).}
+    \label{fig:wave_ex}
+\end{figure}
+
+We were looking for BOLD-signal waves travelling across the human cortex. If a wave travels from one brain region to another, cross-correlation of the BOLD-signals is a straightforward and robust method to determine the time-delay between the two signals, as illustrated on the left side of \fref{fig:wave_ex}. The blue wave, which in this example is assumed to stem from brain region A, leads the red wave from region B by two seconds. The cross-correlation function of these two waves (right panel of \fref{fig:wave_ex}) then exhibits its maximum at $t=2$, which indicates the time-delay between the two waves to be $2$ seconds. In reality, however, the peak of the cross-correlation function will not always be as nice and clear as in this example. The first issue is the fact that the BOLD-signal is not continuously acquired but sampled at a rather low sampling rate (in this study: $2.6$ sec). Therefore, the peak of the cross-correlation function was quadratically interpolated, which proved to give good results in previous studies [\cite{MitraJNPhys}; \cite{MitraPNAS}]. The interpolated position of the peak of on the time-axis is then defined as the time-delay (i.e. \textit{lag}) between the two regions. This lag is equivalent to the latencies $\phi_{ij}$ in \sref{sec:framework}. \\
+
+Another challenge was to figure out whether the observed peak in the cross-correlation function is sign of an actual lagged correlation (i.e., propagated acitivty) or merely coincidental. Thirdly, it is conceivable that propagated activity may in certain cases be reflected by negative correlations, which could be explaeined by modulating mediator processes. In fact, robust anticorrelations between regionally distinct brain networks are frequently observed in fMRI experiments [\cite{FoxAnticorr}; \cite{ChaiAnticorr}]. Moreover, even in the presence of a perfect linear wave propagation, due to noise in the data it is not uncommon for a cross-correlation function to exhibit more than one peak. In order to control for these problems, there are several parameters which we can adjust. Firstly $r_{min}$, the minimum absolute cross-correlation value at time-delay zero, secondly $m_{min}$, the minimum absolute cross-correlation value of the chosen peak and lastly, the procedure by which to determine the sign of the cross-correlation function's peak, for which there are two options. Option 1 dictates that the peak with the largest absolute value is chosen while Option 2 states that the sign of the peak has to be the sign of the cross-correlation function at $t=0$. The eventual choice of parameters was mainly informed by the quality of resultant data and will be discussed in the following paragraph as well as in \sref{sec:Results}.
+
+\begin{figure}[!htb]
+	\centering
+	{\includegraphics[scale=0.3]{../images/crosscorr}}
+	\caption{Principle of applied cross-correlation analysis method, from [\cite{MitraJNPhys}]}
+	\label{fig:crosscorr}
+\end{figure}
+
+\paragraph*{Time-Delay matrix TD}
+\label{sec:TDmatrix}
+
+\noindent Once every brain-region's BOLD-signal is correlated with every other brain region's signal, and the respective time-delays $\phi_{i,j}$ are obtained, they are entered into the \textit{time-delay matrix TD} (equivalent of $M$ in \sref{sec:framework}). As mentioned in the first chapter, TD is skew-symmetric and its diagonal elements TD are zero\footnote{In reality, this would never exactly be true due to border effects of the applied MATLAB cross-correlation function \textit{xcorr}. As these effects are however minor, the aforementioned assumptions can be forced upon TD which reduces computation time.}. For further illustration, let's assume a $3\times 3$ TD-matrix:
+
+\begin{equation}
+TD= \begin{pmatrix}
+0 & 2 & -1 \\
+-2 & 0 & -1 \\
+1 & 1 & 0 \\
+\end{pmatrix}
+\label{eq:TD}
+\end{equation}
+
+\noindent In this example, the second region (second column/row) follows region 1 by two seconds, as $TD(1,2)>0$, while the third brain region leads region one by one second\footnote{The choice of signs is pure convention. The way it is presented here was chosen to follow previous papers [\cite{MitraPNAS}; \cite{MitraJNPhys}].}, and so on.
+
+\subsection{Region-specific spread (Lag-Maps)}
+For different paradigms and pathologies, different brain regions are of special interest to the investigator. In order to explore each region's stand in the whole of activity propagation dynamics, we are interested in a region-specific \textit{map} $\mathbf{v}$. This is achieved by singling out that region's column in the TD matrix and multiplying it by $-1$ as is done here for the first region:\footnote{In the given example, the desired map could of course also be determined by choosing the corresponding \textit{row} in TD. Following previous papers, I chose the column.}
+
+\begin{equation}
+TD= \begin{pmatrix}
+\text{\textcolor{red}{0}} & 2 & -1 \\
+\text{\textcolor{red}{-2}} & 0 & -1 \\
+\text{\textcolor{red}{1}} & 1 & 0 \\
+\end{pmatrix} \xrightarrow[]{\cdot(-1)} \mathbf{v} =\begin{pmatrix} 0 \\ 2 \\ -1 \end{pmatrix}
+\label{eq:TD_lagmap}
+\end{equation}
+\newline
+\noindent As, by convention, negative values are considered ``early'' values, map \textbf{v} indicates a propagation of activity from region 3, to region 1, to region 2, which is exactly as defined before. Henceforth, following previous papers, we call such a seed-based map of propagated activity a \textit{Lag-Map} [\cite{MitraJNPhys}; \cite{MitraPNAS}].
+
+\subsection{Global Spread of Activity (Lag-Projection)}
+In order to investigate the mean global spread of BOLD activity across the brain, we averaged the column vectors of the TD matrix to obtain one mean entry per column, resulting in a $1\times n$ vector, where $n$ denotes the number of ROIs:
+
+$$ TD= \begin{pmatrix}
+0 & 2 & -1 \\
+-2 & 0 & -1 \\
+1 & 1 & 0 \\
+\hline \\
+-0.34 & 1 & -0.67
+\end{pmatrix} $$
+
+\noindent Each entry in the resulting vector then represents the mean time-delay of that specific region with all other brain regions. It is thus a global measure of the spread of activity. This vector will in the following be called the \textit{(1D) Lag-Projection} [\cite{MitraJNPhys}; \cite{MitraPNAS}]\footnote{Note that this depends on the sign convention used to compute TD (see footnote in \sref{sec:TDmatrix}). If another sign convention is chosen, the vector of column means has to be multiplied by $-1$ to result in the actual Lag-Projection.}. This is analogous to the maximum-likelihood estimate \eref{eq:ml_position} introduced in \sref{sec:framework}.
+
+\subsection{Underlying Processes (Lag-Threads)}
+\label{sec:LagThreads_methods}
+It is safe to assume that the observed global spread of activity is the result of a combination of processes that cannot directly be observed. The simplest assumption is that the measured global signal is a linear combination of orthogonal processes, which can be resolved via PCA. PCA was performed on $TDz$, which is the zero-centered version of the time-delay matrix TD ($TDz$ is obtained by subtracting each column's mean from every entry in that column, and is thus analogous to $X$ in \sref{sec:PCA_intro}). PCA then returns $V$, the matrix of principal components, or eigenvectors, which, multiplied to $TDz$, gives the \textit{PCA-scores} $Z$\footnote{Graphically speaking, the PCA-scores of $TDz$ are just a rotated version of the data.}:
+
+\begin{equation}
+Z=TDz\cdot V
+\label{eq:Z}
+\end{equation}
+
+\noindent After normalization of $Z$ by the square-root of $m$, which is the number of rows in $TDz$, we obtain $Z_m$, whose column vectors are the sought-after underlying processes\footnote{This normalization by $\sqrt{m}^{-1}$ serves to transform the results back to units of seconds.}:
+
+\begin{equation}
+Z_m=\frac{Z}{\sqrt{m}}
+\label{eq:Zm}
+\end{equation}
+
+These trajectories are called \textit{Lag-Threads $Z_m$}\footnote{NB: Due to isotropy of PCA, Lag-Threads are not unambiguously defined, i.e. if vector $\mathbf{L}$ is a Lag-Thread, so is $-\mathbf{L}$. As the eigenvector-weighted sum of all Lag-Threads are supposed to, at least approximately, equate the 1D Lag-Projection [\cite{MitraPNAS}], the chosen set of Lag-Threads must satisfy this condition.} [\cite{MitraJNPhys}; \cite{MitraPNAS}], and are sorted by their respective eigenvalues. For the given example:
+
+\begin{equation}
+Z_m= \begin{pmatrix}
+0.38 & 0.51 & 0 \\
+-1.13 & -0.10 & 0 \\
+0.76 & -0.41 & 0 \\
+\end{pmatrix}, 
+EV= \begin{pmatrix}
+3 \\
+0.67 \\
+0 \\
+\end{pmatrix}.
+\label{eq:PCA_ex}
+\end{equation}
+
+\noindent The first eigenvalue of value 3 in EV belongs to the leftmost column of $Z_m$. This Lag-Thread corresponds to a spread of activity in the order $2\rightarrow 1\rightarrow 3$, or $3\rightarrow 1\rightarrow 2$ respectively, as the direction of a Lag-Thread is not clearly defined, as mentioned before. This, and the fact that there is a second non-zero eigenvalue, although TD was originally defined to stem from a single process, illustrates the trickiness of the procedure, which will be discussed \sref{sec:DiscOfMethods}.
+
+
+\subsection{Lag-Thread Back-Projection}
+\label{sec:BackProjection}
+Lag-Threads can only be computed at group level as the single-subject data matrices TD are too noisy for the Lag-Threads to be computed on subject level [\cite{MitraPNAS}]. 
+
+\noindent Consider any zero-centered data matrix $M\in \mathbf{R}^{n\times d}$ with principial components $v_1$, $v_2$, ..., $v_d$, where $n$ is the number of observations and $d$ the number of dimensions. Then $M\cdot v_i \cdot v_i^T$ is the projection of $M$ onto its ith principal component in $M$'s original space, i.e. the result is a straight line in a $d$-dimensional vector space. This is what we did with our data matrices $TDz$, denoting the resulting projections on the principal components as ``reconstructed'' $TDz$, or $TDzrec$:
+
+\begin{equation}
+TDzrec_i^{\{k\}} = TDz^{\{k\}}\cdot v_i^{\{k\}}\cdot (v_i^{\{k\}})^T
+\label{eq:backproj1}
+\end{equation}
+
+\noindent Here, $k$ indicates, which group-level TDz was used for the back-projection method (k=1 (preterm), 2 (term), 3 (preterm+term)). The resulting $TDzrec$ were then used as independent variables in a general linear model, to investigate each (group-level) Lag-Thread's influence on the subject-level $TDz_j$, where index j stands for subject j:
+
+\begin{equation}
+TDz_j=\lambda_{j,0}+\lambda_{j,1}\cdot TDzrec_1^{\{k\}}+\lambda_{j,2}\cdot TDzrec_2^{\{k\}}+...+\lambda_{j,n}\cdot TDzrec_n^{\{k\}} + \epsilon
+\label{eq:backproj2}
+\end{equation}
+
+\noindent This procedure is analogous in essence to the procedure described in [\cite{LeonardiPCA}].
+
+\section{Selection of ROIs}
+\label{sec:roiselection}
+\begin{figure}[!htb]
+	\centering
+	{\includegraphics[scale=0.4]{../images/17rois}}
+	\caption{Due to robustness issues of the time-delay matrix Lag-Thread analysis was limited to 17 ROIs. From [\cite{MitraPNAS}].}
+	\label{fig:17rois}
+\end{figure}
+\noindent For Lag-Projection analyses, we used a mask which homogeneously parcellated the gray matter in 6526 cubic ROIs, each of size ($6\text{ mm}\times6\text{ mm}\times 6\text{ mm}$), which was kindly provided by Anish Mitra. In a previous paper, A. Mitra et al. showed that for Lag-Thread analyses with such a mask, one needs at least around 400 participants [\cite{MitraPNAS}], we used a smaller gray matter mask with just as much as 17 ROIs of varying size (\fref{fig:17rois}). With a mask of that size, it is possible to perform Lag-Thread analyses with sample sizes of $N\geq50$. Furthermore it was shown, also by A. Mitra et al., that using a quadratic TD-matrix leads to an underestimation of the rank of the Lag-Thread matrix $Z_m$ if the number of ROIs is large. In such a case, it is advised to use an additional second mask with less ROIs [\cite{MitraPNAS}].
+
+\section{Discussion}
+\label{sec:DiscOfMethods}
+\noindent Since the interpretation of Lag-Maps and the 1D Lag-Projection is straight-forward, I want to discuss the interpretation of Lag-Threads. In early papers by Mitra et al., it was suggested that the columns of $Z$ can be interpreted as subprocesses, physically present in the cortex, create the observed latency structure $TD$ by superposition [\cite{MitraPNAS}]. While certain examples can be constructed this way, this claim does not withstand further investigation. It should intuitively be clear that, among other things, the method by which the latency values $\phi_{ij}$ are determined has great influence on the data structure, and different methods are likely to result in wildly different $\phi_{ij}$, representing seemingly different lag structures, even if they all are derived from the same processes. Yet, the first set of principial components should at least be treated as epiphenomena of processes which are yet to be clearly defined. They can therefore give insightful information about the functioning of the human brain and its dynamical functional organization. \\
+
+\noindent Moreover, the validity of PCA as a clustering algorithm in this context seems to be strong, as A. Mitra et al (2015) empirically showed that the eigenvalue-weighted sum of the first few principal components correlates well with the observed 1D Lag-Projection. They were furthermore able to show that ``contradictory'' Lag-Maps could be associated with different Lag-Threads and that their results were neither dependent on assumptions of linearity nor orthogonality, as results obtained by kernel-PCA with a Gaussian filter did not differ much from those obtained by PCA [suppl. info to \cite{MitraPNAS}].

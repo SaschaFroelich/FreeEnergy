@@ -1,0 +1,95 @@
+\documentclass[ %
+english, % Sprache
+12pt, % Standardschriftgröße
+a4paper, % Papierformat
+titlepage, % Titelseite aktivieren
+twoside=on, % Zweiseitiges Layout
+numbers=noenddot, % Überschriftennummerierung ohne Punkt am Ende
+bibliography=totoc, % Literaturverzeichnis im Inhaltsverzeichnis aufführen
+chapterprefix=true, % Kapitel steht vor \chapter-Befehl
+open=right % Kapitel auf ungerader Seitenzahl beginnen
+]{scrreprt} % Dokumenteigenschaften
+\usepackage[utf8]{inputenc} % wie Editoreingaben umwandeln (Umlaute, Sonderzeichen, ...)
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage{ragged2e} %Für text Blocksatz
+\usepackage{babel} % Sprachpakete
+\usepackage[T1]{fontenc} % Encoder für Font
+\usepackage{amsmath,amsthm,amssymb} % Zum Einbinden von Formeln
+\usepackage{amssymb} % Zum Einbinden von Symbolen
+\usepackage{color} % Für Farben
+\usepackage{wrapfig} %To wrap text around figures
+\usepackage{afterpage} %Make stuff appear on next page
+\usepackage{calc} % Rechenoperationen innerhalb Befehlsdefinitionen
+\usepackage[ %
+automark, % Automatische Labelsetzung für Kopfzeile
+headsepline % Trennstrich zwischen Kopfzeile und Text
+]{scrpage2} % Für eigene Kopf- und Fußzeile 
+\usepackage{graphicx} % Zum Einfügen von Grafiken
+\usepackage{natbib}
+\usepackage{graphics}
+\usepackage{mathptmx} % Standardschrift ist Times New Roman (auch in Formeln)
+\usepackage[rightcaption]{sidecap} % Überschrift neben Bild
+\usepackage[ %
+format=plain, % Beschriftung ist gewöhnlicher Absatz
+justification=justified, % Blocksatz
+font=small, % Schriftgröße
+labelfont=bf, % Fettes Label
+labelsep=colon, % Doppelpunkt als Trenner
+figurename=Figure, % Labelname für Bild
+tablename=Table % Labelname für Tabelle
+]{caption} % Für Bildunterschriften
+\usepackage[hypcap=true,subrefformat=simple]{subcaption} % Mehrere Bilder nebeneinander mit Unterschrift
+%\usepackage{titlesec} % Überschrifen formatieren
+\usepackage[separate-uncertainty]{siunitx} % Für Einheiten
+\usepackage{booktabs} % Tabellen besser formatieren können, für ExcelToLatex Makro
+\usepackage{tikz,pgfplots} %For graphs and plots
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=1.6}
+
+\usetikzlibrary{positioning} 
+%\usepackage{multirow} % Tabellen besser formatieren können, für ExcelToLatex Makro
+%\usepackage{bigstrut} % Tabellen besser formatieren können, für ExcelToLatex Makro
+%\usepackage{enumitem} % Für spezielle Aufzählungen
+\usepackage[version=3]{mhchem} % Für chemische Formeln
+
+\usepackage[top=4.5cm,bottom=6cm,left=2.75cm,right=3cm,footskip=1cm]{geometry} % Layout
+\usepackage[ %
+bookmarks=true, % Zeige Lesezeichenleiste
+pdftitle={Distinct propagation of brain activity patterns for aversive emotions with and without cognitive regulation}, % Titel
+pdfauthor={Sascha Frölich}, % Autor
+colorlinks=true, % Umrandete (Box) oder farbige Links
+linkcolor=black, % interne Linkfarbe
+urlcolor=blue, % Farbe von URL links
+citecolor=black % Farbe für Zitierungslinks
+]{hyperref} % Links in Pdf - Paket muss als letztes geladen werden!!!
+%
+% Format von Bildreferenz: \ref{} --> 1.1(a), \subref{} --> (a)
+\renewcommand\thesubfigure{(\alph{subfigure})}
+%
+% Schriftart setzen (Einheitlich Times New Roman) + Überschriften fett:
+\setkomafont{disposition}{\bfseries}
+%
+% Anzahl Ebenen im Inhaltsverzeichnis
+\setcounter{tocdepth}{2}
+%
+% Überschriften formatieren:
+%\titlespacing*{\section}{0pt}{*3}{*1.5} % Abstand vor und nach Überschrift
+%\titleformat{\section}[hang]{\Large\bfseries}{\makebox[1.5cm][l]{\thesection}}{0pt}{}
+%\titleformat{\subsection}[hang]{\large\bfseries}{\makebox[1.5cm][l]{\thesubsection}}{0pt}{}
+%\titleformat{\subsubsection}[hang]{\normalsize\bfseries}{\makebox[1cm][l]{\thesubsubsection}}{0pt}{}
+%
+% Befehl für Referenzen auf Formeln, mit \eref{...} aufrufen
+\newcommand{\eref}[1]{Eq.~\eqref{#1}}
+%
+% Befehl für Referenzen auf Bilder, mit \fref{...} aufrufen
+\newcommand{\fref}[1]{Fig.~(\ref{#1})}
+%
+% Befehl für Referenzen auf Tabellen, mit \tref{...} aufrufen
+\newcommand{\tref}[1]{Tab.~\ref{#1}}
+%
+% Befehl für Referenz  auf einen Abschnitt, mit \sref{...} aufrufen
+\newcommand{\sref}[1]{Sec.~\ref{#1}}
+
+\setlength\parskip{\baselineskip}
+\usepackage[section]{placeins} % Place floats in the section they are in

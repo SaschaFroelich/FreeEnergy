@@ -1,0 +1,105 @@
+\chapter{Appendix}
+\label{sec:Appendix}
+
+\section{Proof of Property A}
+\label{sec:propertyA}
+\textbf{Property A:} For an additive system, the data points represented by the time-delay matrix $M$ lie on the a straight line.
+
+\begin{proof}
+  Imagine we move from point j in the data to point k (i.e. from column j in $M$ to column k), then coordinate i (i.e. row i in $M$) changes its value by
+  \begin{align*}
+    M(i,j)-M(i,k)=\phi_{ij}-\phi_{ik}.
+  \end{align*}
+  Due to the definition of additivity (\eref{eq:additivity}), this can be rewritten as
+  \begin{align*}
+    &\phi_{ij}-\phi_{ik}=(\phi_{il}+\phi_{lj})-(\phi_{il}+\phi_{lk})\\
+    &=\phi_{lj}-\phi_{lk},
+  \end{align*}
+which is true for any coordinate l. Thus, jumping from one point in the data to another point, every coordinate changes by the same value, which is the definition of a straight line with slope one.
+\end{proof}
+
+\section{Preprocessing}
+\label{sec:Preprocessing}
+
+Data were preprocessed and denoised with CONN [\cite{CONN}] in the following order: Removal of the five first functional scans in order to allow the signal to enter an equilibrium state, functional slice-time correction, functional realignment and unwarping, functional centering, structural centering, functional coregistration to structural images, structural segmantation and normalization, functional outlier detection (ART-based scrubbing), functional smoothing with a 6 mm FWHM Gaussian kernel. Denoising was performed on confounds from White Matter, CSF, realignment, effect of rest and scrubbing. Afterwards, functional data was bandpass-filtered with retained frequencies ranging from 0.008 Hz to 0.09 Hz. Finally, global signal was regressed using a subject-specific brainmask. The procedure of global signal regression (GSR) is controversial and commonly not applied to fMRI data, as it was shown that it introduces spurious anticorrelations in functional connectivity analyses [\cite{MurphyGSR}]. Here, we opted for the adoption of GSR as the global signal is believed to influence the lagged cross-correlation of regions, which follows the practice introduced by Mitra et al. [\cite{MitraJNPhys}; \cite{MitraPNAS}].
+
+\section{Physics of MRI}
+\label{sec:Physics}
+\begin{figure}[h!]
+	\centering
+	{\includegraphics[scale=0.3]{../images/B0_precession}}
+	\caption{Under the influence of a magnetic field, the spin $\mu$ of the hydrogen nucleus precesses counterclockwise around the magnetic field lines.}
+	\label{fig:B0_spin_prec}
+\end{figure}
+Magnetic Resnonance Imaging (MRI) exploits the magnetic properties of subatomic particles, or more specifically, their spins. Every MRI-experiment is conducted inside a homogeneous magnetic field $B_0$, which generally ranges from 3T to 7T in strength, which forces the spins to align along the magnetic field lines, as seen in \fref{fig:B0_spin_prec}. The precession frequency $\omega_L$, or \textit{Larmor frequency}, depends on two factors, as is evident from \eref{eq:Larmor}. It is on one hand dependent on the strength of the applied magnetic field, while on the other hand on the \textit{gyromagnetic ration} $\gamma$, which is a poperty of the particle at hand. 
+
+\begin{equation}
+\omega_L = \gamma B_0
+\label{eq:Larmor}
+\end{equation}
+
+In human imaging experiments, the particle of interest is the hydrogen nucleus, i.e. the proton, as it is present in all organic matter. Its gyromagnetic ratio has a value of:
+
+\begin{equation}
+\gamma=2.675\cdot 10^8 \frac{rad}{s\cdot T}=2\pi \Gamma=2\pi\cdot 42.58\frac{MHz}{T}
+\label{eq:gyrom_ratio}
+\end{equation}
+
+Thus, in a typical 3T imaging experiment, the Larmor frequency for the hydrogen nucleus is 
+
+\begin{equation}
+\omega_L = 3T\cdot \Gamma=127.74 \text{ MHz}
+\label{eq:Larmor_ex_3T}
+\end{equation}. 
+
+\paragraph*{The radiofrequency pulse (RF pulse)}
+\begin{figure}[!htb]
+	\centering
+	{\includegraphics[scale=0.4]{../images/tipping}}
+	\caption{The RF pulse tips the proton's magnetization by an angle of $90^{\circ}$. Figure taken from [\cite{Haacke}].}
+	\label{fig:tipping}
+\end{figure}
+\noindent Once the spins are aligned along $B_0$, which is conventionally pointing in the $\hat{z}$-direction, the next step in an MRI experiment is to flip the spins by an angle of $90^{\circ}$, such that the spins are then aligned in the $\hat{x}\hat{y}$-plane (the reasons for this will become evident later). In the rotating reference frame of the proton's spin, where the spin is statically pointing along $z'$, this can be achieved by an effective (static) magnetic field $B_{eff}\parallel x'$, about which the spin will precess until $B_{eff}$ is switched off (\fref{fig:tipping}, top left panel (a)). If the effective magnetic field was turned on for just the right amount of time, the proton spin will now be lying in the $x'y'$-plane. Transforming this process into the laboratory frame of the scanner, where the spin precesses around $B_0$ at frequency $\omega_L$, the effective magnetic field used to tip the hydrogen nucleus' spin must itself be rotating at $\omega_L$ (\fref{fig:tipping}, top right panel (b)). This is achieved by a \textit{radiofrequency pulse}, which needs to be tuned to the exact resonance frequency of the spins and lies int he range of some 100 MHz, as seen before (\eref{eq:Larmor_ex_3T}). [\cite{Huettel}; \cite{Haacke}; \cite{Moonen}]. \\
+
+\noindent For the sake of illustration, I want to walk through an example 3D MRI-experiment.
+
+\subsubsection{Exemplary 3D imaging experiment}
+\begin{figure}[!htb]
+	\centering
+	{\includegraphics[scale=0.4]{../images/ex_sequence}}
+	\caption{Example sequence of a 3D imaging experiment. Figure taken from [\cite{Haacke}].}
+	\label{fig:ex_sequence}
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering
+	{\includegraphics[scale=0.3]{../images/slice_selection}}
+	\caption{Slice Selection.}
+	\label{fig:slice_selection}
+\end{figure}
+
+
+\fref{fig:ex_sequence} illustrates a typical imaging sequence for a 3D imaging experiment [\cite{Haacke}]. While there are numerous different imaging sequence designs, we will only discuss this oneas it is simplistic yet illustrative. The horizontal axis is the time axis, while the rows denoted by \textit{rf}, $G_{z,SS}$ etc. each stand for a different scanner component and will become clear as we go along. \textit{rf} is the radiofrequency pulse, and $G_{z,SS}$ the \textit{slice-select (magnetic field) gradient} along the $\hat{z}$-direction. It is produced by the scanner's \textit{gradient coils} and is basically a magnetic field, again pointing along $\hat{z}$, whose field strength varies linearly along $\hat{z}$. Consequently, while $G_{z,SS}$ is turned on, the magnetic field experienced by the spin's is now a function of their position along the $\hat{z}$-axis, and so is their respective Larmor frequencies. The radiofrequency pulse rf, which ideally has a rather narrow frequency range, can therefore excite only those spins which lie at just the right position along the $\hat{z}$-axis (\fref{fig:slice_selection}). As a result, a slice in the $\hat{x}\hat{y}$-plane with a thickness depending on the frequency range of the rf pulse, is excited. Afterwards, the slice-select gradient is reversed (denoted by the downwards extending box with inscription `B/2'), which serves to rephase the spins across the thickness of the slice (for in-depth discussion see chapter 10 in \cite{Haacke}). At the same time the reverse slice-select gradient is switched on, two further magnetic field gradients come into play, the \textit{phase encoding} gradient $G_{y,PE}$, which points along the $\hat{y}$-axis as well as the \textit{read-gradient} $G_{x,R}$, pointing along $\hat{x}$. The striped appearance of $G_{y,PE}$ means that first, it starts at the lowest indicated value $-G_{max}$. Afterwards, the same sequence starts anew, with a fresh rf-pulse exciting the same slice again, whereas the $G_{y,PE}$-gradient is now switched on at a value increased by $\Delta G_{PE}$ compared to the one before. Let's assume for the moment that only the phase-encoding gradient is on. This results in the spins accumulating a y-dependent phase. This y-dependent phase-accumulation can be described in terms of the spatiel frequency $k_y$ along the y-direction:
+
+\begin{equation}
+k_y(G_y)=\Gamma G_y\tau_y
+\label{eq:ky}
+\end{equation}
+
+\noindent where $\tau_y$ is the duration for which $G_y$ is on and $G_y=dB_y/dy$. The read-gradient along the x-direction has the same effect, this time along the x-direction, such that the spatiel frequency along that direction is
+
+\begin{equation}
+k_x(G_x)=\Gamma G_x\tau_x.
+\label{eq:kx}
+\end{equation}
+
+\noindent Up to this point, all we did was, first, exciting a slice in the $\hat{x}\hat{y}$-planeand introducing spatial frequencies of phases ($k_x$ and $k_y$) within the slice. In the last step, the read gradient is again turned on, now with reversed sign and for a duration of $2\tau_x$, at the same time the ADC (analog-to-digital-converter) is turned on. The ADC is basically what reads the signal at certain points in time. The read-gradient again modulates the spatiel frequency along the $\hat{x}$-direction. As $G_{x,R}$ is on with the same magnitude as before, the spatiel frequency $k_x$ is modulated from $-k_{x,max}$ through $0$ up to $k_{x,max}$. In k-space, we now have scanned one line along $k_x$, with constant $k_y$. If this is repeated with varying values og $G_{y,PE}$, as indicated in \fref{fig:ex_sequence}, a plane in the $k_xk_y$-plane is imaged. This comes in very handy as the measured MRI signal is the \textit{Fourier Transform} of the 2D spin density in the probe:
+
+\begin{equation}
+s(k_x,k_y)=\int \int \rho(x,y,z_0)e^{-i2\pi(k_xx+k_yy)} dxdy.
+\label{eq:signal}
+\end{equation}
+
+\noindent The derivation of \eref{eq:signal} is beyond the scope of this thesis and can be reviewed in [\cite{Haacke}]. What it serves to make clear, however, is that the obtained signal is the Fourier-Transform of the probe's 2D spin density $\rho(x,y,z_0)$. Having covered a sufficiently large region of k-space this way, it is thus possible to obtain the 2D spin density, and hence the structure of the probe, by an inverse discrete Fourier Transform.
+
+\noindent Having now imaged one slice of the probe, the same procedure can be repeated with a slice-select gradient of different strength than the one before to image the next slice and so on. 

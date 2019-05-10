@@ -1,0 +1,107 @@
+\chapter{Bayesian Inference With Probability Distributions}
+\label{sec:Prob_Distros}
+
+\section{MAP Inference}
+A classic MAP inference scheme will look like this:
+
+\begin{align}
+\text{Posterior} \propto \text{Likelihood}\cdot \text{Prior}.
+\label{eq:MAP}
+\end{align}
+In order to obtain a probability distribution as posterior, it will then be necessary to normalize the resulting Posterior to integrate to 1. In sequential update schemes, the posterior to work with would then be
+
+\begin{align}
+\frac{\text{Posterior}}{Z},
+\label{eq:Normalization}
+\end{align}
+where $Z$ is a normalizing constant. The posterior is also called the agent's \textit{belief}
+
+\subsection{Product of Gaussian PDFs}
+
+As gaussian distributions are priors to themselves, there may arise situations in which the chosen likelihood function as well as the prior distribution are gaussians. The product of two gaussian distributions
+\begin{align*}
+\mathcal{N}(x;\mu_1,\sigma_1 ^2) \\
+\mathcal{N}(x;\mu_2,\sigma_2 ^2)
+\end{align*}
+
+will then be a gaussian function, but not a distribution, as it is not normalized. 
+
+\begin{align}
+& \mathcal{N}(x;\mu_1,\sigma_1 ^2) \cdot \mathcal{N}(x;\mu_1,\sigma_1 ^2) \\
+&= \mathcal{N}(x;\frac{\mu_1 \sigma_2 ^2 +\mu_2 \sigma_1 ^2}{\sigma_1 ^2\cdot \sigma_2 ^2},\frac{\sigma_1 ^2\cdot \sigma_2 ^2}{\sigma_1 ^2+ \sigma_2 ^2})\cdot e^{-\frac{C}{2\frac{\sigma_1^2 \sigma_2^2}{\sigma_1^2 + \sigma_2^2}}}, \\
+C & =\frac{\sigma_1^2 \sigma_2^2}{(\sigma_1^2 + \sigma_2^2)^2}\left[ (\mu_1 -\mu_2)^2 +\ln(2\pi(\sigma_1^2 + \sigma_2^2)) \right],
+\label{eq:normal_product}
+\end{align}
+with normakization constant $Z=\exp{\left(-\frac{C}{2\frac{\sigma_1^2 \sigma_2^2}{\sigma_1^2 + \sigma_2^2}}\right) }$
+In Bayesian Inference, we are however always interested in probability distributions. Therefore, we need to normalize the resulting gaussian function, which returns
+
+\begin{align}
+\text{Posterior} = \mathcal{N}(x;\frac{\mu_1 \sigma_2 ^2 +\mu_2 \sigma_1 ^2}{\sigma_1 ^2\cdot \sigma_2 ^2},\frac{\sigma_1 ^2\cdot \sigma_2 ^2}{\sigma_1 ^2+ \sigma_2 ^2}).
+\label{eq:Posterior}
+\end{align}
+
+\subsection{Maximum Likelihood Estimate}
+
+\section{Example: On a Boat}
+You are on a boat. You are trying to figure out your direction of travel. Directly in front of you is a lighthouse. You know that the lighthouse is more or less at 25 degrees from north, but you are not 100$\%$ sure about its exact location. You perform a series of 10 measurements with a noisy measurement device, which indicates that the lighthouse is about 65 degrees from north.
+
+\begin{tikzpicture}
+\begin{axis}[
+  no markers, 
+  domain=0:90, 
+  samples=300,
+  ymin=0,
+  axis lines*=left, 
+  xlabel=$\theta$,
+  every axis y label/.style={at=(current axis.above origin),anchor=south},
+  every axis x label/.style={at=(current axis.right of origin),anchor=west},
+  height=5cm, 
+  width=12cm,
+  ytick=\empty,
+  enlargelimits=false, 
+  clip=false, 
+  axis on top,
+  grid = major,
+  hide y axis,
+  xtick distance=10
+  ]
+
+ \addplot [very thick,blue] {gauss(x, 25, 25)};
+  \addplot [very thick,red!50!black] {gauss(x, 65, 25)};
+   \addplot [very thick,orange] {gauss(x, 45, 12.5)};
+
+\draw[dashed] (axis cs:25,0) -- (axis cs:25,0.08);
+\draw[dashed] (axis cs:65,0) -- (axis cs:65,0.08);
+
+\node[below] at (axis cs:25, 0)  {$\mu_1$}; 
+\node[below] at (axis cs:65, 0)  {$\mu_2$}; 
+
+\node[below] at (axis cs:0, -0.01)  {North}; 
+\node[below] at (axis cs:45, -0.01)  {Northeast}; 
+\node[below] at (axis cs:90, -0.01)  {East}; 
+
+\node[text=blue] at (axis cs:10,0.07) {Prior};
+\node[text=red] at (axis cs:80,0.09) {Measurements = Likelihood};
+\node[text=orange] at (axis cs:55,0.11) {Posterior};
+
+\node[text=black] at (axis cs:0,-0.05) {Figure ???};
+
+\end{axis}
+\end{tikzpicture}
+
+Bayesian Inference according to \eqref{eq:MAP} and \eqref{eq:Normalization} suggests a posterior as given in the picture. It might at first be an intuitive solution: Your inferred posterior is exactly in the middle between prior and likelihood if both have the same precision. From the figure, and from \eqref{eq:Posterior} it is however clear, that the variance of the resulting posterior is independent of the distance from the likelihood to the prior. Furthermore, the posterior's variance will always be smaller than the variance of either likelihood or prior. This is a not reasonable. If my prior indicates one direction, and the likelihood a completely other direction, it might be reasonable to infer the middle, but it does not make sense to be even more certain about the midway direction than about both prior and likelihood. \\
+
+This is a misinterpretation of Bayesian Inference. In Bayesian inference, the latent variables which one wishes to infer \textit{are taken to be probability distributions}. This is in contrast to classical physics, where model parameters are taken to be fixed, while our observations of them are noisy. In Bayesian Inference, much like in quantum mechanics, we make the important distinction to think of latent variables as probability distributions. Our measurements of those variables are however fixed, which is equivalent to the collapse of the wave function in QM. The narrowing of the posterior as seen in the figure above only describes our increased certainty about the mean of the probability distribution which itself \textit{is} the latent variable $\theta$. The variance of $\theta$ would be subject to another inference process. \\
+
+As an aside, I want to point out an interesting property of the Free Energy formulation. As can be seen from \eqref{eq:normal_product}, the normalization constant $Z$ will become very small if Likelihood and Prior are very far apart. Interestingly, the Free Energy takes on the form [Schwöbel et al]
+
+\begin{align}
+F = -\ln Z -\sum \ln Z.
+\end{align} 
+
+Thus, small normalization constants produce large free energy, which is supposed to be minimized.
+
+\section{Example: German Tank Problem}
+
+\section{Example: A needle on an infinite grid}
+Blablabla Stochastikübung normal und mit "Bayes"

@@ -1,0 +1,109 @@
+\chapter{Physical Framework: Dynamic Complex Systems and Latency Dynamics}
+\label{sec:framework}
+
+\section{Propagating waves of activity in the Neocortex}
+\begin{figure}[!htb]
+	\centering
+	{\includegraphics[scale=0.4]{../images/wave_mechanisms2}}
+	\caption{Four mechnisms for generation and sustaining of propagating cortical waves. (A) A single driver excites a number of units, each with a specific time-delay compared to the previous one. (B) A propagating pulse is observed when a cellular pacemaker excites one a unit, which in turn excites the next one in line, and so on. This kind of mechanism is believed to underlie epileptiform waves. (C) In a system of weakly coupled oscillators, stable phase differences can occur, which leads to a travelling wave. (D) In an excitable medium, wave interactions can lead to the creation of rotating spiral waves. The arrows indicate the direction of propagation. Note that different regions in the system (here denoted as 1 and 2) experience periodic excitation in the absence of any cellular pacemaker. Figure Taken from \cite{Wu}.}
+	\label{fig:wave_mechanisms2}
+\end{figure}
+\noindent Propagating waves in the animal neocortex have been observed under a wide range of conditions. While some waves depend on presented stimuli or the task paradigm, they have also been observed in the absence of any given task or stimulus [\cite{Wu}]. They are therefore believed to be produced by most fundamental cortical processes governing preception and, to a certain degree, cognition. Ermentrout and Kleinfeld suggested three mechanisms by which travelling waves in the brain can arise [\cite{Ermentrout}]. These mechanisms are depicted in \fref{fig:wave_mechanisms2} (a) to (c). The first mechanism (a) describes the excitation of different units by one driving oscillator, where each unit is excited at a time-delay with respect to the previous unit. This constitutes a fictive propagating wave. The second proposed mechanism is that of a propagating pulse, where the first unit in line is excited by a driving oscillator. The excited unit then excites its neighbouring unit, which in turn excites the next one and so on. The third proposed possibility for the creation of cortical waves is depicted in \fref{fig:wave_mechanisms2} (c). In a network of weakly coupled oscillators, certain conditions can lead to stable phase differences between neighbours which leads to the formation of an apparent travelling wave. The existence of such waves arises from purely theoretical considerations and has since been met with experimental evidence [\cite{Ermentrout}]. The fourth mechanism of wave generation, suggested by Wu and Zhuang, describesthe formation of spiral waves in an excitable medium [\cite{Wu}]. The interaction of two travelling waves can lead to the creation of a spiral wave, where the wave's singularity at the center acts as a pacemaker for oscillation. This differs from the previous proposed mechanisms as in this case, no cellular oscillator is necessary for the creation and perpetuation of the wave. The creation of spiral waves via the interaction of two travelling waves have been observed experimentally in the rat visual cortex.
+
+\section{Description of a single additive process}
+\label{sec:additive_process}
+\begin{figure}[!htb]
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../images/tournament2}
+    \caption{}
+  \end{subfigure}
+ ~
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../images/tournament1}
+    \caption{}
+  \end{subfigure}
+  \caption{A linear trajectory of propagated activity (left) can be observed by measuring pairwise time-delays between units, which creates a complete directed graph (right panel).}
+    \label{fig:tournament}
+\end{figure}
+
+
+\noindent Consider a connected system, where one unit influences the next one in a linear fashion (left side of \fref{fig:tournament}). This could describe a neuronal system, where the firing of one unit triggers the firing of the following unit. Measuring all pairs of firing relationships would result in a graph as shown on the right side of \fref{fig:tournament}, where each unit is connected to each other unit in the graph, while the direction of arrows indicates the firing order. Using the notation $\phi_{ij}$ for the measured time-delay between units i and j (where a positive value of $\phi_{ij}$ indicates that unit i fires before unit j), time delays between units i,j and k are called additive if the following holds true:
+
+\begin{equation}
+\phi_{ij}=\phi_{ik}+\phi_{kj}.
+\label{eq:additivity}
+\end{equation}
+
+\noindent If this condition is satisfied for all subsets of pairs of units, the graph on the right side of \fref{fig:tournament} can simply be represented by a one-dimensional time-line, where the maximum-likelihood estimate $\hat{x}_k$ of position $x_k$ of unit k on the time-axis is:
+
+\begin{equation}
+\hat{x}_k=\frac{1}{n}\sum_{l\neq k}\phi_{lk},
+\label{eq:ml_position}
+\end{equation}
+
+\noindent as is shown in [\cite{SchneiderNC}]. \\
+
+\subsection{Matrix Representation}
+\label{sec:matrix_rep}
+\noindent It is possible to represent these latency relations in an $n$-dimensional vector space, where $n$ is the number of units. This can be done by entering the measured time-delays into a matrix $M$, where entry $M(i,j)$ equals $\phi_{ij}$:
+
+\begin{equation}
+M= \begin{pmatrix}
+0 & \phi_{12} & ... & \phi_{1n} \\
+-\phi_{12} & ... & ... & ... \\
+... & ... & ... & \phi_{(n-1)n} \\
+-\phi_{1n} & ... & -\phi_{(n-1)n} & 0
+\end{pmatrix}.
+\label{eq:matrixM}
+\end{equation}
+
+\noindent $M$ is necessarily skew-symmetric, as $\phi_{ij}=-\phi_{ji}$, for if unit j follows unit i by a certain delay, then i leads j by the same amount. Furthermore, the diagonal elements of $M$ are zero since any unit exhibits zero time-delay with itself. Interpreting matrix $M\in \mathbf{R}^{n\times n}$ as a collection of points in an $n$-dimensional vector space, where columns correspond to observations and rows to coordinates, it can easily be shown that \textit{for an additive system, the data points represented by the time-delay matrix $M$ lie on a straight line in n-dimensional vector space $\mathbf{R}^n$ (Property A).} The proof can be found in the appendix. \\
+
+\noindent In the case of matrix representation \eref{eq:matrixM}, the maximum-likelihood estimate of the position on the time-axis of unit $k$ (\eref{eq:ml_position}) equals the mean value of column $k$ in $M$. Moreover, singling out column $k$ of matrix $M$ and putting the $n$ entries of the obtained vector on a time-line returns the measured time-delays of all other units with respect to unit $k$.
+
+\paragraph*{Transitivity}  
+
+\begin{figure}[h!]
+	\centering
+	{\includegraphics[scale=0.5]{../images/transitivity}}
+	\caption{Measurement errors (also: \textit{additivity errors}) destroy additivity. If the additivity error is not too large, transitivity will be conserved (middle row), while too large an error destroys transitivity (bottom row).}
+	\label{fig:transitivity}
+\end{figure}
+\noindent In a real-world experiment, measurements are noisy. Therefore, perfect additivity of measured time-delays can never be obtained. It is thus useful to introduce the property of transitivity, which in this context, refers to consistent lag relations. This is to say that, in a transitive system, if unit two fires after unit one, and unit three fires after unit two, then unit three also fires after unit one:
+
+\begin{equation}
+M(2,1)<0 \wedge M(3,2)<0 \Rightarrow M(3,1)<0
+\label{eq:transitivity}
+\end{equation}
+
+\noindent In a perfectly additive system with a large number of nodes, even perfect transitivity might not be conserved after measurement, as illustrated in \fref{fig:transitivity}. If measurement errors are in the order of the time-delays, the directionality between pairs of units can be reversed, which results in non-transitive subpairs of units. Therefore, it is advised to examine the data for \textit{partial transitivity}, which is the ratio of transitive triples to all triples in the system [\cite{NikolicTRANS}]. \\
+
+\section{Principal Component Analysis for the Recovery of Latency Structures}
+
+\subsection{PCA: A very short introduction}
+\label{sec:PCA_intro}
+\noindent For this thesis, we were interested in finding covert latency patterns inside the data matrix $M$ of time-delays $\phi_{ij}$. In order to do this, we applied Principal Component Analysis (PCA). PCA finds an orthogonal set of directions inside a data sample, which maximizes the explained variance of the data. Here, this is done using the covariance matrix $C$ of the data matrix $X$, which is a zero-centered version of $M$:
+
+\begin{equation}
+C=\frac{1}{n}X^TX,
+\label{eq:PCA1}
+\end{equation}
+
+\noindent where $n$ is the number of observations. Note that \eref{eq:PCA1} is valid only for the case in which the mean of each observation in $X$ is known to be zero, which is true due to the aforementioned zero-centering of the data [\cite{Jolliffe}]. The \textit{PCA-coefficients},  which are sometimes called the \textit{principal components}, are the eigenvectors of $C$:
+
+\begin{equation}
+C=V\Lambda V^{-1}=V\Lambda V^T.
+\label{eq:PCA2}
+\end{equation}
+
+\noindent The columns of $V$ are the principal components, and $\Lambda$ is a diagonal matrix of the corresponding eigenvalues. The last equation holds due to the fact that the matrix of eigenvectors $V$ is orthogonal, i.e. $V^{-1}=V^T$, and the fact that the eigenvalue decomposition of a symmetric, positive definite matrix, such as $C$, equals its singular value decomposition. Multiplication of the coefficients (i.e. the eigenvectors of $C$) to the original data gives the matrix of PCA-scores $Z$:
+
+\begin{equation}
+Z=X\cdot V.
+\label{eq:PCA3}
+\end{equation}
+
+\subsection{Recovery of Latency Structures with PCA}
+\noindent The application of PCA to the time-delay matrix $M$ recovers a set of PCA-scores $Z$ \eref{eq:PCA3}. In the context of this thesis, the columns of $Z$ (or rather, a normalized version thereof, see \sref{sec:LagThreads_methods}) are interpreted as a possible decomposition of the latency structure into underlying basic processes [\cite{MitraJNPhys}; \cite{MitraPNAS}]. This is analogous to previous studies using PCA on other neurophysiological data [\cite{FristonPETPCA}; \cite{LeonardiPCA}]. The validity, as well as possible pitfalls of this manner of interpretation, are considered in \sref{sec:DiscOfMethods}. \\
+
+\noindent While, due to the aforementioned property of linearity (property A, \sref{sec:matrix_rep}), additive processes with little noise can be truthfully recovered by PCA, it is by no means clear if PCA is always the best procedure to uncover patterns of spatiotemporal latency structures. PCA discovers linear, orthogonal directions within a data sample, on the basis of the variance structure of the data. While empirical evidence suggests that its application here is robust against the assumptions of linearity and orthogonality (see \sref{sec:DiscOfMethods}), it is conceivable that the latency-structure of cortical processes describes a distribution of data that is more adequately recovered by other methods. Such methods could be Independent Component Analysis (ICA), which is similar to PCA, but without the assumption of orthogonality, or diffusion maps, which is a non-linear manifold-learning technique [\cite{CoifmanPNAS}; \cite{CoifmanACHA}]. Diffusion maps might be of special interest, as Dsilva et al. used them in a data-driven approach to recover the slow dynamics of multiscale stochastic dynamical systems, even in the presence of large variance in the fast dynamics [\cite{Dsilva}]. As the signals observed in neuroimaging experiments are generally believed to be product of such systems, diffusion maps might give useful insights beyond what is possible with traditional manifold-learning algorithms.

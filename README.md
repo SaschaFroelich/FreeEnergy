@@ -1,3 +1,3 @@
-# Blabla test
+# The Free Energy
 
-That's it
+The Free Energy is a concept from statistical physics which has come to be of interest to scientists from biology, neuroscience, and computer science (among others). The physical Free Energy has some intriguing properties, and it can be shown that the minimization of a system's Free Energy is a statistical necessity which is equivalent to the strive of a system to reduce its internal energy gradients. In this Jupyter Notebook, I give a very short, simple, and hopefully intuitive introduction to the physical Free Energy.
